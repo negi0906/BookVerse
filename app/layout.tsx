@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import Navbar from "@/components/navbar/navbar";
+import Footer from "@/components/footer";
+
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,11 +24,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
-  );
+  <html
+    lang="en"
+    className={cn(
+      "h-full",
+      "antialiased",
+      geistSans.variable,
+      geistMono.variable,
+      "font-sans",
+      figtree.variable
+    )}
+  >
+    <body className="min-h-full flex flex-col">
+      <Navbar />
+
+      {children}
+
+      <Footer />
+    </body>
+  </html>
+);
 }
